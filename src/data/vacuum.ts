@@ -29,11 +29,14 @@ export const enum VacuumEntityFeature {
   MAP = 2048,
   STATE = 4096,
   START = 8192,
+  CLEAN_ROOM = 16384,
+  CURRENT_ROOM = 32768
 }
 
 interface VacuumEntityAttributes extends HassEntityAttributeBase {
   battery_level?: number;
   fan_speed?: any;
+  room?: string;
   [key: string]: any;
 }
 

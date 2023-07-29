@@ -100,7 +100,7 @@ class MoreInfoVacuum extends LitElement {
     const stateObj = this.stateObj;
 
     const filterExtraAttributes =
-      "fan_speed,fan_speed_list,status,battery_level,battery_icon";
+      "fan_speed,fan_speed_list,current_room,room_list,status,battery_level,battery_icon";
 
     return html`
       ${stateObj.state !== UNAVAILABLE
@@ -228,6 +228,34 @@ class MoreInfoVacuum extends LitElement {
             </div>
           `
         : ""}
+        ${supportsFeature(stateObj, VacuumEntityFeature.CURRENT_ROOM)
+          ? html`
+          <div>
+            <span class="status-subtitle"
+              >${this.hass!.localize(
+                "ui.dialogs.more_info_control.vacuum.current_room"
+              )}:
+            </span>
+            <span>
+              <strong>
+                ${computeAttributeValueDisplay(
+                  this.hass.localize,
+                  stateObj,
+                  this.hass.locale,
+                  this.hass.entities,
+                  "current_room"
+                ) ||
+                computeStateDisplay(
+                  this.hass.localize,
+                  stateObj,
+                  this.hass.locale,
+                  this.hass.entities
+                )}
+              </strong>
+            </span>
+          </div>
+        `
+      : ""}  
 
       <ha-attributes
         .hass=${this.hass}
@@ -236,6 +264,7 @@ class MoreInfoVacuum extends LitElement {
       ></ha-attributes>
     `;
   }
+
 
   private callService(ev: CustomEvent) {
     const entry = (ev.target! as any).entry as VacuumCommand;

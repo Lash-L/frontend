@@ -287,6 +287,9 @@ export const getStates = (
       if (attribute === "fan_speed") {
         result.push(...state.attributes.fan_speed_list);
       }
+      else if (attribute === "rooms") {
+        result.push(...state.attributes.room_list)
+      }
       break;
     case "water_heater":
       if (!attribute || attribute === "operation_mode") {
